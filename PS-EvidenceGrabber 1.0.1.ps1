@@ -13,9 +13,6 @@
 
 #Start of script
 
-# Ensures running as admin, exit if not:
-
-if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) { Start-Process powershell.exe "-NoProfile -ExecutionPolicy Bypass -File `"$PSCommandPath`"" -Verb RunAs; exit } 
 
 
 $Logo = @"
@@ -213,7 +210,8 @@ $LinkFiles = Get-WmiObject Win32_ShortcutFile | select Filename, Caption, @{NAME
 
 $PSHistory = Get-History -count 100 | select id, commandline, startexecutiontime, endexecutiontime | ConvertTo-Html -fragment
 
-#All items in Downloads folder
+#All items in Downloads folder. This may cause an error if the script is run from an external USB or Network drive, even when
+#run as admin.
 
 $Downloads = Get-ChildItem C:\Users\*\Downloads\* -recurse  |  select  PSChildName, Root, Name, FullName, Extension, CreationTimeUTC, LastAccessTimeUTC, LastWriteTimeUTC, Attributes  | ConvertTo-Html -Fragment
 
