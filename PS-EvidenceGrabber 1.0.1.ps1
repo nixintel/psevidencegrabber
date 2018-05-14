@@ -5,7 +5,7 @@
 
 # Acknowledgements:
 #
-# Phil Chapman of Firebrand Training who came up with the original volatile data script. 
+# Phil Chapman of Firebrand Training (www.firebrandtraining.co.uk) who came up with the original volatile data script. 
 # The WLAN password gathering command in this script is from Phil's original.
 #
 # This script is provided "as is" and may be used, edited, shared, or modified in any way provided acknowledgement is given.
