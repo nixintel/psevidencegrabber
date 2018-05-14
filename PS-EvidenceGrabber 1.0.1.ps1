@@ -5,7 +5,8 @@
 
 # Acknowledgements:
 #
-# Phil Chapman of Firebrand Training who came up with the original volatile data script. The WLAN password gathering command in this script is from Phil's original
+# Phil Chapman of Firebrand Training who came up with the original volatile data script. 
+# The WLAN password gathering command in this script is from Phil's original.
 #
 # This script is provided "as is" and may be used, edited, shared, or modified in any way provided acknowledgement is given.
 
@@ -19,14 +20,11 @@ if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]:
 
 $Logo = @"
 
-
- _______  _______         _______  __   __  ___   ______   _______  __    _  _______  _______    _______  ______    _______  _______  _______  _______  ______   
-|       ||       |       |       ||  | |  ||   | |      | |       ||  |  | ||       ||       |  |       ||    _ |  |   _   ||  _    ||  _    ||       ||    _ |  
-|    _  ||  _____| ____  |    ___||  |_|  ||   | |  _    ||    ___||   |_| ||       ||    ___|  |    ___||   | ||  |  |_|  || |_|   || |_|   ||    ___||   | ||  
-|   |_| || |_____ |____| |   |___ |       ||   | | | |   ||   |___ |       ||       ||   |___   |   | __ |   |_||_ |       ||       ||       ||   |___ |   |_||_ 
-|    ___||_____  |       |    ___||       ||   | | |_|   ||    ___||  _    ||      _||    ___|  |   ||  ||    __  ||       ||  _   | |  _   | |    ___||    __  |
-|   |     _____| |       |   |___  |     | |   | |       ||   |___ | | |   ||     |_ |   |___   |   |_| ||   |  | ||   _   || |_|   || |_|   ||   |___ |   |  | |
-|___|    |_______|       |_______|  |___|  |___| |______| |_______||_|  |__||_______||_______|  |_______||___|  |_||__| |__||_______||_______||_______||___|  |_|
+ ___  ___     ___     _    _                  ___          _    _             
+ | _ \/ __|___| __|_ _(_)__| |___ _ _  __ ___ / __|_ _ __ _| |__| |__  ___ _ _ 
+ |  _/\__ \___| _|\ V / / _` / -_) ' \/ _/ -_) (_ | '_/ _` | '_ \ '_ \/ -_) '_|
+ |_|  |___/   |___|\_/|_\__,_\___|_||_\__\___|\___|_| \__,_|_.__/_.__/\___|_|  
+                                                                               
 
 "@
 
@@ -149,17 +147,20 @@ $userprofiles = Get-WmiObject -Class Win32_UserProfile | Select-object -property
 Write-host ""
 Write-host "Gathering Device and Operating System Information..."
 
-
-
+#Environment Settings
 $env = Get-ChildItem ENV: | select name, value | convertto-html -fragment 
+
+#System Info
 $systeminfo = Get-WmiObject -Class Win32_ComputerSystem  | Select-Object -Property Name,Caption,SystemType,Manufacturer,Model,DNSHostName,Domain,PartOfDomain,WorkGroup,CurrentTimeZone,PCSystemType,HyperVisorPresent | ConvertTo-Html -Fragment 
+
+#OS Info
 $OSinfo = Get-WmiObject -Class Win32_OperatingSystem   | Select-Object -Property Name, Description,Version,BuildNumber,InstallDate,SystemDrive,SystemDevice,WindowsDirectory,LastBootupTime,Locale,LocalDateTime,NumberofUsers,RegisteredUser,Organization,OSProductSuite | ConvertTo-Html -Fragment
+
+#Hotfixes
 $Hotfixes = Get-Hotfix | Select-Object -Property CSName, Caption,Description, HotfixID, InstalledBy, InstalledOn | ConvertTo-Html -fragment 
+
+#Logical drives (current session)
 $LogicalDrives = get-wmiobject win32_logicaldisk | select DeviceID, DriveType, FreeSpace, Size, VolumeName | ConvertTo-Html -fragment
-
-
-
-
 
 
 
@@ -191,9 +192,17 @@ $USBDevices = Get-ItemProperty -Path HKLM:\System\CurrentControlSet\Enum\USB*\*\
 
 #Gets list of installed applications and devices
 
+
+#Identifies any connected/previously connected webcams
 $Imagedevice = Get-PnpDevice  -class 'image' -EA SilentlyContinue |  ConvertTo-Html -Fragment
+
+#All currently connected PNP devices
 $UPNPDevices = Get-PnpDevice -PresentOnly -class 'USB', 'DiskDrive', 'Mouse', 'Keyboard', 'Net', 'Image', 'Media', 'Monitor' | ConvertTo-Html -Fragment
+
+#All previously connected disk drives not currently accounted for. Useful if target computer has had drive replaced/hidden
 $UnknownDrives = Get-PnpDevice  -class 'diskdrive' -status 'unknown' | ConvertTo-Html -Fragment
+
+#Installed Applications
 $InstalledApps = Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\* | Select-Object DisplayName, DisplayVersion, Publisher, InstallDate | ConvertTo-Html -Fragment
 
 #Gets all link files created in last 180 days. Perhaps export this as a separate CSV and make it keyword searchable?
@@ -208,6 +217,7 @@ $PSHistory = Get-History -count 100 | select id, commandline, startexecutiontime
 
 $Downloads = Get-ChildItem C:\Users\*\Downloads\* -recurse  |  select  PSChildName, Root, Name, FullName, Extension, CreationTimeUTC, LastAccessTimeUTC, LastWriteTimeUTC, Attributes  | ConvertTo-Html -Fragment
 
+#End time date stamp
 
 $endtimecheck = Get-Date -Format "dd'-'MM'-'yyyy HH':'mm':'ss"
 
@@ -219,7 +229,7 @@ Write-host "Compiling Final Report..."
 (New-Object -ComObject wscript.shell).popup("Script Completed. Please check the HTML file before continuing.")
 
 
-#Styles the HTML output for obtained data
+#Styles the HTML output for obtained data. Future versions of PSEG will have better styled HTML!
 
 $head = '<style> 
 BODY{font-family:calibri; background-color: #ffffff;}
@@ -233,8 +243,6 @@ TD{border-width:1px;padding: 2px;border-style: solid;border-color: black;backgro
 ConvertTo-Html -Head $head -Title "Live Forensic Script Output For $description $exhibit"  >$OutputDest
 
 #Case information
-
-
 
 "<center>">> $OutputDest
 "<h2> Case reference: $case </h2><br>" >> $outputdest
