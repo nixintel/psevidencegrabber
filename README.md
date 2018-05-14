@@ -1,5 +1,8 @@
 # psevidencegrabber
-Powershell Script for Live Forensics by Steven Harris https://github.com/ipversion7 
+
+<b>Powershell Script for Live Forensics by Steven Harris</b> https://github.com/ipversion7 
+
+<b>VERSION</b> 1.0.1
 
 PS-EvidenceGrabber is a Powershell script designed for capturing live forensic evidence including volatile network, 
 system, user and registry information. It takes full advantage of the Cmdlets available with Powershell and replaces many of
@@ -7,7 +10,7 @@ the legacy CMD commands such as ipconfig, netstat, arp -a etc from older scripts
 
 The output is saved as an HTML file which makes the information easier to read and analyse.
 
-HOW TO USE PS-EVIDENCE GRABBER
+<b>HOW TO USE PS-EVIDENCE GRABBER</b>
 
 1. The script assumes you have physical access to the machine you are examining and is intended to be run from a USB stick.
 
@@ -24,12 +27,12 @@ rationalised as part of the the documentation process.
 
 5. The script takes several minutes to run and then exits. The HTML report is then saved on the Harvest drive that you specified. It's advisable to check the report for any errors as soon as possible after the script has executed. Please note that if there is no output for a particular field, it may be that the computer does not hold any relevant information.
 
-DISCLAIMER
+<b>DISCLAIMER</b>
 
 The script has been tested on Windows 10 (build 1803 - April 2018) and works without any errors. Please contact me via GitHub 
 if you experience any difficulties. The script will only work on 64-bit Windows and will not work on any versions of Windows prior to Windows 7 (i.e. XP and Vista). I haven't tested it on any older Win 7/8 builds but let me know what works/doesn't work so the script can be modified accordingly.
 
-LICENSE
+<b>LICENSE</b>
 
 Copyright <2018 Steven Harris>
 
