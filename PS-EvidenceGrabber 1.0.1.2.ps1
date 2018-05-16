@@ -185,7 +185,7 @@ $StartupProgs = Get-WmiObject Win32_StartupCommand | select Command, User, Capti
 ##################################################
 
 Write-host ""
-Write-host "Gathering Key Registry Settings..."
+Write-host "Gathering Key Registry Settings. This may take several minutes."
 
 #Gets list of USB devices
 
