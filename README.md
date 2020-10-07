@@ -29,8 +29,7 @@ rationalised as part of the the documentation process.
 
 <b>DISCLAIMER</b>
 
-The script has been tested on Windows 10 (build 1803 - April 2018) and works without any errors. Please contact me via GitHub 
-if you experience any difficulties. The script will only work on 64-bit Windows and will not work on any versions of Windows prior to Windows 7 (i.e. XP and Vista). I haven't tested it on any older Win 7/8 builds but let me know what works/doesn't work so the script can be modified accordingly.
+The script has been tested on Windows 10 (build 1803 - April 2018) and works without any errors. The script will only work on 64-bit Windows and will not work on any versions of Windows prior to Windows 7 (i.e. XP and Vista). I haven't tested it on any older Win 7/8 builds but let me know what works/doesn't work so the script can be modified accordingly.
 
 <b>LICENSE</b>
 
